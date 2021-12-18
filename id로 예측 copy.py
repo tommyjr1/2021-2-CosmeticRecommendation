@@ -107,7 +107,7 @@ app.config["SECRET_KEY"] = "very_secret"
 
 @app.route('/')
 def home_page():
-    return render_template("homepage.html", title="Home_Page")
+    return render_template("mainPage.html", title="Home_Page")
 
 @app.route("/resultpage", methods=["POST","GET"])
 def result_page():
@@ -115,20 +115,21 @@ def result_page():
         result = request.form
         
         #입력값 받기(홈페이지 변수명)        
-        user_id = result['user_id']
+        # user_id = result['user_id']
         skin_type = result['skin_type']
         item_type = result['item_type']
         brand_type = result['brand_type']
+        print(skin_type)
+
+        # #함수 실행
+        # iddf = data_load()
+        # iddict = recur_dictify(iddf)
+        # id_list, cos_list = extract(iddict)
+        # rddf = create_dic(iddict)
+        # algo = load_model()
+        # def_result = predict(user_id, skin_type, item_type, brand_type)
         
-        #함수 실행
-        iddf = data_load()
-        iddict = recur_dictify(iddf)
-        id_list, cos_list = extract(iddict)
-        rddf = create_dic(iddict)
-        algo = load_model()
-        def_result = predict(user_id, skin_type, item_type, brand_type)
-        
-        return render_template("resultpage.html", title="Result_Page", def_result=def_result)
+        return render_template("mainPage.html", title="Result_Page")
 
 
 if __name__ == "__main__":

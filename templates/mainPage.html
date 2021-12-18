@@ -11,41 +11,41 @@
         <div class="row">
           <div class="col">
               <h5>회원</h5>
-              <form action="../id로 예측 copy.py/resultpage" method="POST">
+              <form action="/resultpage" method="POST">
                 <div class="mb-3">
                     <label for="user_id" class="form-label">Email address</label>
-                    <input type="text" class="form-control" id="user_id" placeholder="ID">
+                    <input type="text" class="form-control" id="user_id" name="user_id" placeholder="ID">
                   </div>
-                <button type="subit" class="btn btn-outline-success">Submit</button>
+                <button type="submit" class="btn btn-outline-success">Submit</button>
 
               </form>
           </div>
           <div class="col">
             <h5>비회원</h5>
 
-            <form action="../id로 예측 copy.py/resultpage" method="POST">
+            <form action="/resultpage" method="POST">
 
                 <label for="skin_type">Choose a car:</label>
-                <select id="skin_type" class="form-select" aria-label="Default select example">
+                <select id="skin_type" name="skin_type" class="form-select" aria-label="Default select example">
                     <option selected>Open this select menu</option>
-                    <option value="1">One</option>
-                    <option value="2">Two</option>
-                    <option value="3">Three</option>
+                    <option value="One">One</option>
+                    <option value="Two">Two</option>
+                    <option value="Three">Three</option>
                   </select>
 
-                <label for="brand_type">Choose a car:</label>
-                <input type="text" class="form-control" id="brand_type" placeholder="제품 종류 입력">
+                <label for="item_type">Choose a car:</label>
+                <input type="text" class="form-control" id="item_type" name="item_type" placeholder="제품 종류 입력">
 
 
                 <label for="brand_type">Choose a car:</label>
-                <select id="brand_type" class="form-select" aria-label="Default select example">
+                <select id="brand_type" name="brand_type" class="form-select" aria-label="Default select example">
                 <option selected>Open this select menu</option>
-                <option value="1">One</option>
-                <option value="2">Two</option>
-                <option value="3">Three</option>
+                <option value="One">One</option>
+                <option value="Two">Two</option>
+                <option value="Three">Three</option>
                 </select>
 
-                <button type="subit" class="btn btn-outline-success">Submit</button>
+                <button type="submit" class="btn btn-outline-success">Submit</button>
 
               </form>
           </div>
