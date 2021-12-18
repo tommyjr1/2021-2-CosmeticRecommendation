@@ -91,7 +91,7 @@ def predict(user_id, skin_type, item_type, brand_type):
 
     for r1 in result:
         max_rating = cfdata.df[cfdata.df['id']==r1]['point'].max()
-        cos_id = cfdata.df[(cfdata.df['point']==max_rating)&(cfdata.df['id']==r1)]['item'][:2/].values
+        cos_id = cfdata.df[(cfdata.df['point']==max_rating)&(cfdata.df['id']==r1)]['item'][:2].values
         
         for cos_item in cos_id:
             print(cos_list[cos_item])
