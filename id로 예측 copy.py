@@ -28,7 +28,7 @@ def recur_dictify(frame):
     return d
 
 
-# ### 사용자 목록, 화장품 목록을 리스트로 담기
+# 사용자 목록, 화장품 목록을 리스트로 담기
 def extract(iddict):
     id_list = []
     cos_set = set()
@@ -41,8 +41,7 @@ def extract(iddict):
     cos_list = list(cos_set)
     return id_list, cos_list
 
-# ### CF추천시스템에 사용할 딕셔너리 
-
+# CF추천시스템에 사용할 딕셔너리 
 def create_dic(iddict):
     global id_list
     global cos_list
@@ -95,12 +94,10 @@ def predict(user_id, skin_type, item_type, brand_type):
         
         for cos_item in cos_id:
             print(cos_list[cos_item])
-    return "대충 결과 반환"
+    return "대충 결과 반환" #딕셔너리 형태로 저장
 
 
-from flask import Flask, request, render_template_string, render_template, url_for
-from wtforms import SelectField, SubmitField, StringField
-
+from flask import Flask, request, render_template
 
 app = Flask(__name__)
 app.config["SECRET_KEY"] = "very_secret"
@@ -120,13 +117,18 @@ def result_page():
         item_type = result['item_type']
         brand_type = result['brand_type']
         
-        #함수 실행
-        iddf = data_load()
-        iddict = recur_dictify(iddf)
-        id_list, cos_list = extract(iddict)
-        rddf = create_dic(iddict)
-        algo = load_model()
-        def_result = predict(user_id, skin_type, item_type, brand_type)
+        if len(user_id) != 0:
+            
+            #함수 실행
+            iddf = data_load()
+            iddict = recur_dictify(iddf)
+            id_list, cos_list = extract(iddict)
+            rddf = create_dic(iddict)
+            algo = load_model()
+            def_result = predict(user_id, skin_type, item_type, brand_type) #딕셔너리 형태로 저장
+        else:
+            #뭐 어떻게든 실행
+            def_result = ""
         
         return render_template("resultpage.html", title="Result_Page", def_result=def_result)
 
