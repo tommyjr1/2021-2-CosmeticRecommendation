@@ -104,6 +104,16 @@ def main_func(id_list, algo, rddf, cos_list, myid, ourdata):
             printresult.append(items)
     return(printresult)
 
+def get_review(ourdata, printresult):
+    tmp = pd.DataFrame()
+    for i in range(len(printresult)):
+        tmp = tmp.append(ourdata[(ourdata['item1']==printresult[i][0]) & (ourdata['item2']==printresult[i][1])])
+    subject = list(tmp['subject'])
+    review = list(tmp['review'])
+    date = list(tmp['date'])
+    result_list = [list([x,y,z]) for x,y,z in zip(subject, review, date)]
+    return(result_list)
+
 from flask import Flask, request, render_template
 
 app = Flask(__name__)
@@ -129,8 +139,9 @@ def result_page():
         algo = load_model()
         myid = id_func(ourdata, myid, prop, sub, brand)
         printresult = main_func(id_list, algo, rddf, cos_list, myid, ourdata)
+        review_list = get_review(ourdata, printresult)
 
-    return render_template("resultPage.html", title="Result_Page", printresult=printresult)
+    return render_template("resultPage.html", title="Result_Page", printresult=printresult, review_list=review_list)
 
 if __name__ == "__main__":
     app.run()

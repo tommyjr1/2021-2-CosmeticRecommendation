@@ -138,6 +138,7 @@ def main_func():
         cos_id = cfdata.df[(cfdata.df['point']==max_rating)&(cfdata.df['id']==r1)]['item'].values
         
         for cos_item in cos_id:
+
             item = cos_list[cos_item]
             result = branddata[branddata['item2']==item]
             items = [result['item1'].values[0], result['item2'].values[0]]
