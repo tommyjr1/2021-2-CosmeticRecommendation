@@ -10,7 +10,7 @@ import dill
 
 #데이터 불러오기
 def load_data():
-    ourdata = pd.read_csv("ourdata.csv")
+    ourdata = pd.read_csv("./static/model/ourdata.csv")
     ourdata['id'] = ourdata['id'].astype(str)
     iddf = ourdata[['id', 'item2', 'point']]
     iddf = iddf.groupby(by=['id', 'item2'], as_index=False).min()
@@ -62,12 +62,12 @@ def create_dic(id_list, cos_list, iddict):
 
 #모델 업로드
 def load_model():
-    algo = joblib.load("KNN_model.pkl")
+    algo = joblib.load("./static/model/KNN_model.pkl")
     return algo
 
 #id 찾기
 def id_func(ourdata, myid, prop, sub, brand):
-    if myid != None:
+    if myid == None:
         newdata = ourdata[ourdata['property'] == prop]
         newdata = newdata[newdata['subject'].str.contains(sub)]
 
