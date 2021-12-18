@@ -10,25 +10,28 @@
 <body>
     <nav class="navbar navbar-light bg-light">
         <div class="container-fluid">
-          <a class="navbar-brand">Navbar</a>
-          <form class="d-flex">
-            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-success" type="submit">Search</button>
-          </form>
+          <a class="navbar-brand">추천 화장품 정보</a>
+          <input class="form-control me-2" type="search" id="filterWord" placeholder="Search" aria-label="Search">
+          <button class="btn btn-outline-success" id="filterBtn" type="submit">조건 검색</button>
         </div>
     </nav>
     <div class="row row-cols-1 row-cols-md-2 g-4">
+      {% for lis in printresult %}
         <div class="col">
-            <div class="card">
-                <div class="card-header" id="brand_name">
-                  브랜드
-                </div>
-                <div class="card-body">
-                  <h5 class="card-title">제품명</h5>
-                  <a href="#" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">리뷰 보러가기</a>
-                </div>
+          <div class="card">
+              <div class="card-header" id="brand_name">
+                {{lis[0]}}
               </div>
+              <div class="card-body">
+                <h5 class="card-title">{{lis[1]}}</h5>
+                <a href="#" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">리뷰 보러가기</a>
+              </div>
+            </div>
         </div>
+      {% endfor %}
+
+      
+        
 
     </div>
 
@@ -54,6 +57,6 @@
 
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-    
+    <script src="{{url_for('static', filename='js/resultFilter.js')}}"></script>
 </body>
 </html>

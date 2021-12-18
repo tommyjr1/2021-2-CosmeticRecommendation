@@ -90,8 +90,6 @@ def main_func(id_list, algo, rddf, cos_list, myid, ourdata):
     cfdata = surprise.Dataset.load_from_df(rddf[col_list], reader)
     index = id_list.index(myid)
     neigh = algo.get_neighbors(index, k=5)
-
-    print('당신에게 추천드리는 화장품: ', '\n')
     
     branddata = ourdata[['item1', 'item2']].drop_duplicates(['item2'])
     printresult=[]
