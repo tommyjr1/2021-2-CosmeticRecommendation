@@ -135,8 +135,8 @@ def main_func():
         
         for cos_item in cos_id:
             print(cos_list[cos_item])
-            
-            
+
+
 ourdata, iddf = load_data()
 iddict = recur_dictify(iddf)
 id_list, cos_list = extract(iddict)
