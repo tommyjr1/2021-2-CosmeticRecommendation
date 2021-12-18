@@ -90,8 +90,6 @@ def main_func(id_list, algo, rddf, cos_list, myid, ourdata):
     cfdata = surprise.Dataset.load_from_df(rddf[col_list], reader)
     index = id_list.index(myid)
     neigh = algo.get_neighbors(index, k=5)
-
-    print('당신에게 추천드리는 화장품: ', '\n')
     
     branddata = ourdata[['item1', 'item2']].drop_duplicates(['item2'])
     printresult=[]
@@ -105,6 +103,16 @@ def main_func(id_list, algo, rddf, cos_list, myid, ourdata):
             items = [result['item1'].values[0], result['item2'].values[0]]
             printresult.append(items)
     return(printresult)
+
+def get_review(ourdata, printresult):
+    tmp = pd.DataFrame()
+    for i in range(len(printresult)):
+        tmp = tmp.append(ourdata[(ourdata['item1']==printresult[i][0]) & (ourdata['item2']==printresult[i][1])])
+    subject = list(tmp['subject'])
+    review = list(tmp['review'])
+    date = list(tmp['date'])
+    result_list = [list([x,y,z]) for x,y,z in zip(subject, review, date)]
+    return(result_list)
 
 from flask import Flask, request, render_template
 
@@ -131,8 +139,9 @@ def result_page():
         algo = load_model()
         myid = id_func(ourdata, myid, prop, sub, brand)
         printresult = main_func(id_list, algo, rddf, cos_list, myid, ourdata)
+        review_list = get_review(ourdata, printresult)
 
-    return render_template("resultPage.html", title="Result_Page", printresult=printresult)
+    return render_template("resultPage.html", title="Result_Page", printresult=printresult, review_list=review_list)
 
 if __name__ == "__main__":
     app.run()
