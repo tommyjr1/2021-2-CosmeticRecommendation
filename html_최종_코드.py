@@ -131,8 +131,9 @@ def result_page():
         algo = load_model()
         myid = id_func(ourdata, myid, prop, sub, brand)
         printresult = main_func(id_list, algo, rddf, cos_list, myid, ourdata)
+        print(printresult)
 
-    return render_template("resultPage.html", title="Result_Page", printresult=printresult)
+    return render_template("resultPage.html", title="Result_Page")
 
 if __name__ == "__main__":
     app.run()
