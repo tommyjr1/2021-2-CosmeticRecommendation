@@ -128,16 +128,21 @@ def main_func():
     reader = surprise.Reader(rating_scale = (1,5))
     cfdata = surprise.Dataset.load_from_df(rddf[col_list], reader)
     index = id_list.index(myid)
-    result = algo.get_neighbors(index, k=5)
+    neigh = algo.get_neighbors(index, k=5)
 
     print('당신에게 추천드리는 화장품: ', '\n')
-
-    for r1 in result:
+    branddata = ourdata[['item1', 'item2']].drop_duplicates(['item2'])
+    printresult=[]
+    for r1 in neigh:
         max_rating = cfdata.df[cfdata.df['id']==r1]['point'].max()
-        cos_id = cfdata.df[(cfdata.df['point']==max_rating)&(cfdata.df['id']==r1)]['item'][:2].values
+        cos_id = cfdata.df[(cfdata.df['point']==max_rating)&(cfdata.df['id']==r1)]['item'].values
         
         for cos_item in cos_id:
-            print(cos_list[cos_item])
+            item = cos_list[cos_item]
+            result = branddata[branddata['item2']==item]
+            items = [result['item1'].values[0], result['item2'].values[0]]
+            printresult.append(items)
+    print(printresult)
             
             
 ourdata, iddf = load_data()
