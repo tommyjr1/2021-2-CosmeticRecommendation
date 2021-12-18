@@ -23,7 +23,10 @@ import surprise
 import pickle
 import joblib
 import dill
+import os
 
+cwd = os.getcwd()  # Get the current working directory (cwd)
+print(cwd)
 #데이터 불러오기
 def load_data():
     ourdata = pd.read_csv("ourdata.csv")
@@ -78,7 +81,7 @@ def create_dic(id_list, cos_list, iddict):
 
 #모델 업로드
 def load_model():
-    algo = joblib.load("KNN_model.pkl")
+    algo = joblib.load("./model/KNN_model.pkl")
     return algo
 
 #id 찾기
