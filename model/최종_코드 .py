@@ -23,7 +23,7 @@ import warnings
 warnings.filterwarnings('ignore')
 # -
 
-ourdata = pd.read_csv("../ourdata.csv")
+ourdata = pd.read_csv("ourdata.csv")
 ourdata['id'] = ourdata['id'].astype(str)
 ourdata.head()
 
@@ -100,10 +100,10 @@ import pickle
 import joblib
 import dill
 
-with open("KNN_model.pkl", 'wb') as f:
+with open("./model/KNN_model.pkl", 'wb') as f:
     dill.dump(algo, f)
 
-test_model = joblib.load("KNN_model.pkl")
+test_model = joblib.load("./model/KNN_model.pkl")
 
 test_model
 
