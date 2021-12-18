@@ -72,8 +72,8 @@ def load_model():
         algo = dill.load(f)
     return algo
 
-
-def predict():
+#모델 수행
+def predict(user_id, skin_type, item_type, brand_type):
     global algo
     global id_list
     global cos_list
@@ -95,7 +95,7 @@ def predict():
         
         for cos_item in cos_id:
             print(cos_list[cos_item])
-
+    return "대충 결과 반환"
 
 
 from flask import Flask, request, render_template_string, render_template, url_for
@@ -114,9 +114,11 @@ def result_page():
     if request.method == "POST":
         result = request.form
         
-        #입력값 받기        
-        val1 = result['val1']
-        val2 = result['val2']
+        #입력값 받기(홈페이지 변수명)        
+        user_id = result['user_id']
+        skin_type = result['skin_type']
+        item_type = result['item_type']
+        brand_type = result['brand_type']
         
         #함수 실행
         iddf = data_load()
@@ -124,10 +126,7 @@ def result_page():
         id_list, cos_list = extract(iddict)
         rddf = create_dic(iddict)
         algo = load_model()
-        predict()
-        
-        #함수 결과
-        def_result = ""
+        def_result = predict(user_id, skin_type, item_type, brand_type)
         
         return render_template("resultpage.html", title="Result_Page", def_result=def_result)
 
