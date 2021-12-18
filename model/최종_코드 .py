@@ -23,7 +23,7 @@ import warnings
 warnings.filterwarnings('ignore')
 # -
 
-ourdata = pd.read_csv("ourdata.csv")
+ourdata = pd.read_csv("../ourdata.csv")
 ourdata['id'] = ourdata['id'].astype(str)
 ourdata.head()
 
