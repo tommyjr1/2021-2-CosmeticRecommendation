@@ -1,0 +1,109 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Result</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+</head>
+<body>
+    <nav class="navbar navbar-light bg-light">
+        <div class="container-fluid">
+          <a class="navbar-brand">추천 화장품 정보</a>
+          <div class="d-flex">
+            <input class="form-control me-2" type="search" id="filterWord" placeholder="Search" value="{{filter_val}}" aria-label="Search">
+          <!-- <button class="btn btn-outline-success" id="filterBtn" type="submit">조건 검색</button> -->
+        
+          </div>
+        </div>
+    </nav>
+    <div class="row row-cols-1 row-cols-md-2 g-4">
+      {% for lis in printresult %}
+        <div class="col">
+          <div class="card" id="eachCard">
+            <form action="/reviews" method="POST">
+              <div class="card-header" id="brand_name" name="brand_name">
+                {{lis[0]}}
+              </div>
+              <div class="card-body">
+                <h5 class="card-title" id="product_name" name="product_name">{{lis[1]}}</h5>
+                <a href="#" type="submit" id="reviewBtn" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">리뷰 보러가기</a>
+              </div>
+            </form>
+              
+          </div>
+        </div>
+      {% endfor %}
+
+      
+        
+
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">제품 리뷰</h5>
+              <form action="/resultlist" method="POST">
+                <input type="hidden" name="filter_val" value="{{filter_val}}"/>
+                <button type="submit" class="btn-close" id="closeBtn2" data-bs-dismiss="modal" aria-label="Close"></button>
+              </form>
+            </div>
+            <div class="modal-body">
+              <small id="review_brand">{{brand}}</small>
+              <h5 id="review_product">{{product}}</h5>
+              <table id="reviews">
+                <thead>
+                  <td>리뷰어 특징</td>
+                  <td>리뷰</td>
+                  <td>작성일</td>
+                </thead>
+                {% for re in review_list %}
+                  <tr>
+                    <td>{{re[0]}}</td>
+                    <td>{{re[1]}}</td>
+                    <td>{{re[2]}}</td>
+                  </tr>
+                {% endfor %}
+              </table>
+              
+            </div>
+            <div class="modal-footer">
+              <form action="/resultlist" method="POST">
+                <input type="hidden" name="filter_val" value="{{filter_val}}"/>
+              
+                <button type="submit" id='closeBtn' class="btn btn-primary">Close</button>
+              </form>
+            </div>
+        </div>
+        </div>
+    </div>
+    
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+    <!-- <script src="{{url_for('review_list')}}"></script> -->
+    <script src="{{url_for('static', filename='js/resultFilter.js')}}"></script>
+    <script>
+      var myModal = new bootstrap.Modal(document.getElementById('exampleModal'), {
+        keyboard: false
+      })
+      myModal.show()
+
+
+      // var closeBtn = document.getElementById('closeBtn')
+      // closeBtn.addEventListener('click',()=>{
+      //   window.history.back()
+      // })
+      // var closeBtn2 = document.getElementById('closeBtn2')
+      // closeBtn2.addEventListener('click',()=>{
+      //   window.history.back()
+      // })
+
+
+    </script>
+  </body>
+</html>

@@ -79,9 +79,12 @@ def id_func(ourdata, myid, prop, sub, brand):
             myid = a.index[0]
         
         else:
-            b = pd.DataFrame(newdata.groupby('id').size())
-            b = b.sort_values(by = b.columns[0], ascending = False)
-            myid = b.index[0]
+            try:
+                b = pd.DataFrame(newdata.groupby('id').size())
+                b = b.sort_values(by = b.columns[0], ascending = False)
+                myid = b.index[0]
+            except:
+                return 'No'
     return myid
 
 def main_func(id_list, algo, rddf, cos_list, myid, ourdata):
@@ -104,14 +107,19 @@ def main_func(id_list, algo, rddf, cos_list, myid, ourdata):
             printresult.append(items)
     return(printresult)
 
-def get_review(ourdata, printresult):
+def get_review(ourdata,product):
+    print(product)
+    print(ourdata.head())
     tmp = pd.DataFrame()
-    for i in range(len(printresult)):
-        tmp = tmp.append(ourdata[(ourdata['item1']==printresult[i][0]) & (ourdata['item2']==printresult[i][1])])
+    tmp = ourdata[ourdata['item2']==product]
+    # for i in range(len(ourdata)):
+    #     if
+    #     tmp = tmp.append(ourdata[ourdata['item2']==product])
     subject = list(tmp['subject'])
     review = list(tmp['review'])
     date = list(tmp['date'])
     result_list = [list([x,y,z]) for x,y,z in zip(subject, review, date)]
+    print(tmp.head())
     return(result_list)
 
 from flask import Flask, request, render_template
@@ -126,6 +134,7 @@ def home_page():
 @app.route("/resultpage", methods=["POST","GET"])
 def result_page():
     if request.method == "POST":
+        global printresult
         result = request.form
         myid = result.get('user_id')
         prop = result.get('skin_type')
@@ -138,10 +147,39 @@ def result_page():
         rddf = create_dic(id_list, cos_list, iddict)
         algo = load_model()
         myid = id_func(ourdata, myid, prop, sub, brand)
+        if(myid=='No'):
+            return {'error':'관련 정보가 부족합니다ㅠㅠ'}
         printresult = main_func(id_list, algo, rddf, cos_list, myid, ourdata)
-        review_list = get_review(ourdata, printresult)
 
-    return render_template("resultPage.html", title="Result_Page", printresult=printresult, review_list=review_list)
+    return render_template("resultPage.html", title="Result_Page", filter_val = '', printresult=printresult)
+
+# @app.route("/resultFilter")
+# def result_page_js():
+#     while True:
+#         if(len(printresult)!=0):
+#             return render_template("resultFilter.js", printresult=printresult)
+#             break
+
+@app.route("/reviews", methods=['POST', 'GET'])
+def review_list(): 
+    if request.method == "POST":
+        results = request.form;
+        product = results.get('product_name')
+        brand = results.get('brand_name')
+        filterw = results.get('filter_val')
+        print("filter="+filterw)
+        ourdata, iddf = load_data()
+        review_list = get_review(ourdata, product)
+    return render_template("resultPage_review.html", title="reviews", printresult=printresult, brand = brand, product = product, filter_val = filterw ,review_list=review_list)
+
+@app.route("/resultlist", methods=['POST', 'GET'])
+def result_list(): 
+    if request.method=='POST':
+        results = request.form
+        filterw = results.get('filter_val')
+    return render_template("resultPage.html", title="Result_Page", printresult=printresult, filter_val = filterw)
+    
+    
 
 if __name__ == "__main__":
     app.run()
