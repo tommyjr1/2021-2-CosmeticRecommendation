@@ -41,4 +41,4 @@ KNN알고리즘(K=5)을 활용해 유사한 사용자 추출 후, 각 사용자�
 4) 제품을 추천함으로써 구매를 유도할 수 있고, 이에 사용자가 새로운 리뷰를 남기거나 신규 고객이 유입되는 현상 등으로 데이터가 많아짐으로써 더욱 정확한 추천 결과를 제공할 수 있음. 
 <br> </br>
 ## 발표자료
-https://docs.google.com/presentation/d/1ZQEAgy1Cd96aT2M7Ams7WjG4Fn2llLMiLI3-JDawbSA/edit?usp=sharing
+https://docs.google.com/presentation/d/1KPM8Ok3RjzxdFh5W5ww3g1w_gY7LHSIixiSZyGAZVB4/edit?usp=sharing
