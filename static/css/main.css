@@ -35,11 +35,12 @@ tr{
 .rTrev{
     /* width:100px; */
     height: auto;
+    /* width: 700px; */
     word-break : break-all;
 }
 
 table{
-    width:200px;
+    /* width:1000px; */
     table-layout:fixed;
     border-spacing: 5px;
     border-collapse: separate;
