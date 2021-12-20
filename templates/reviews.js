@@ -4,7 +4,7 @@ var reviewBrand = document.querySelector('#review_brand')
 reviewBrand.innerText = "{{brand}}"
 var reviewProduct = document.querySelector('#review_product')
 reviewProduct.innerText = "{{product}}"
-var reviews = document.getElementById('reviews')
+var reviews = document.getElementById('reviewsTable')
 
 
 Array.from(review_list).forEach((review)=>{
