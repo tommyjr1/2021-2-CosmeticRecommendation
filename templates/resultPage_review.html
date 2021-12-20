@@ -4,13 +4,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Result</title>
+    <link rel="stylesheet" href="{{url_for('static', filename='css/main.css')}}">
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 
 </head>
 <body>
     <nav class="navbar navbar-light bg-light">
         <div class="container-fluid">
-          <a class="navbar-brand">추천 화장품 정보</a>
+          <a class="navbar-brand" style="text-align:center; font-family: Times New Roman">Cosmetic Recommendation</a>
           <div class="d-flex">
             <input class="form-control me-2" type="search" id="filterWord" placeholder="Search" value="{{filter_val}}" aria-label="Search">
           <!-- <button class="btn btn-outline-success" id="filterBtn" type="submit">조건 검색</button> -->
@@ -18,6 +20,8 @@
           </div>
         </div>
     </nav>
+    <br> </br>
+
     <div class="row row-cols-1 row-cols-md-2 g-4">
       {% for lis in printresult %}
         <div class="col">
@@ -28,7 +32,7 @@
               </div>
               <div class="card-body">
                 <h5 class="card-title" id="product_name" name="product_name">{{lis[1]}}</h5>
-                <a href="#" type="submit" id="reviewBtn" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">리뷰 보러가기</a>
+                <a href="#" type="submit" id="reviewBtn" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">리뷰 확인</a>
               </div>
             </form>
               
@@ -43,28 +47,27 @@
 
     <!-- Modal -->
     <div class="modal fade" id="exampleModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-scrollable modal-xl">
+        <div class="modal-dialog modal-dialog-scrollable modal-fullscreen">
         <div class="modal-content">
             <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">제품 리뷰</h5>
+            <small id="review_brand">{{brand}}</small>
+            <h5 class="modal-title" id="exampleModalLabel">{{product}}</h5>
               <form action="/resultlist" method="POST">
                 <input type="hidden" name="filter_val" value="{{filter_val}}"/>
                 <button type="submit" class="btn-close" id="closeBtn2" data-bs-dismiss="modal" aria-label="Close"></button>
               </form>
             </div>
             <div class="modal-body">
-              <small id="review_brand">{{brand}}</small>
-              <h5 id="review_product">{{product}}</h5>
-              <table id="reviews">
+              <table id="reviewsTable">
                 <thead>
-                  <td>리뷰어 특징</td>
-                  <td>리뷰</td>
+                  <td class="rTsubs">리뷰어 특징</td>
+                  <td class="rTrev">리뷰</td>
                   <td>작성일</td>
                 </thead>
                 {% for re in review_list %}
                   <tr>
-                    <td>{{re[0]}}</td>
-                    <td>{{re[1]}}</td>
+                    <td class="rTsubs">{{re[0]}}</td>
+                    <td class="rTrev">{{re[1]}}</td>
                     <td>{{re[2]}}</td>
                   </tr>
                 {% endfor %}
@@ -75,7 +78,7 @@
               <form action="/resultlist" method="POST">
                 <input type="hidden" name="filter_val" value="{{filter_val}}"/>
               
-                <button type="submit" id='closeBtn' class="btn btn-primary">Close</button>
+                <button type="submit" id='closeBtn' class="btn btn-danger">Close</button>
               </form>
             </div>
         </div>
@@ -92,16 +95,6 @@
         keyboard: false
       })
       myModal.show()
-
-
-      // var closeBtn = document.getElementById('closeBtn')
-      // closeBtn.addEventListener('click',()=>{
-      //   window.history.back()
-      // })
-      // var closeBtn2 = document.getElementById('closeBtn2')
-      // closeBtn2.addEventListener('click',()=>{
-      //   window.history.back()
-      // })
 
 
     </script>
